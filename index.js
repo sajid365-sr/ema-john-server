@@ -3,7 +3,7 @@ const cors = require("cors");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT || 5000;
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 
 // middleware
 app.use(cors());
@@ -40,6 +40,17 @@ async function run() {
 
       res.send({count, products});
     });
+
+    app.post("/productsByIds", async(req, res) =>{
+      const ids = req.body;
+      const objectIds = ids.map(id => ObjectId(id));
+      const query = {_id : {$in: objectIds}}; // load products by specific id for local storage
+
+      const cursor = productCollection.find(query); // find how many products are there (total products)
+      const products = await cursor.toArray();
+
+      res.send(products);
+    })
 
 
   } 
