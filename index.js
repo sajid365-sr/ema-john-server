@@ -26,7 +26,7 @@ async function run() {
   try {
     const productCollection = client.db("emaJohnShop").collection("products");
     
-
+    // search product by pages and sizes
     app.get("/products", async (req, res) => {
       const page = parseInt(req.query.page);
       const size = parseInt(req.query.size);
@@ -41,6 +41,8 @@ async function run() {
       res.send({count, products});
     });
 
+
+    // For local storage
     app.post("/productsByIds", async(req, res) =>{
       const ids = req.body;
       const objectIds = ids.map(id => ObjectId(id));
