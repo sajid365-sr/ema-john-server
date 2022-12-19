@@ -30,7 +30,7 @@ async function run() {
     app.get("/products", async (req, res) => {
       const page = parseInt(req.query.page);
       const size = parseInt(req.query.size);
-      console.log(page,size);
+      
 
 
       const query = {};
